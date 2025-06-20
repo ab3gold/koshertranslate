@@ -7,10 +7,9 @@ app = Flask(__name__)
 def sms_reply():
     incoming_msg = request.form.get("Body", "").strip()
 
-    # For now, just return a placeholder translation
+    # Placeholder response for now
     response_text = f"Translation: [Placeholder for '{incoming_msg}']"
 
-    # Build the Twilio response
     resp = MessagingResponse()
     resp.message(response_text)
     return str(resp)
@@ -18,3 +17,9 @@ def sms_reply():
 @app.route("/")
 def index():
     return "Language Bot is running!"
+
+# ✅ Required for Heroku to run correctly
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
